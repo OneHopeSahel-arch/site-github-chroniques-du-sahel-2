@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Chroniques du Sahel N° 0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bodoni+Moda:opsz,wght@6..96,500..700&family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+/* Plan : journal web pensé d'abord pour l'ordinateur. Bandeau sarcelle foncé texturé avec le
+   logo clair, comme la maquette « Format WEB » ; contenu sur fond blanc. « À la une » en cinq
+   colonnes, puis chaque pays sur deux colonnes. Une seule colonne sur téléphone.
+   Titres en Bodoni Moda, étiquettes en Bebas Neue, texte en Lato. */
+:root {
+  color-scheme: light;
+  --teal-light: #8AD6D1;
+  --teal: #359FA0;
+  --cream: #FFF0C5;
+  --orange: #FF8C52;
+  --paper: #FFFFFF;
+  --surface: #FFFFFF;
+  --ink: #10201F;
+  --muted: #4A5E5C;
+  --rule: #E2D8B8;
+  --link: #1D6E6F;
+  --soft: #FFF0C5;
+  --band-bg: #8AD6D1;
+  --band-ink: #10201F;
+  --band-edge: #359FA0;
+  --tag-ink: #10201F;
+  --mast-bg: #1A565B;
+  --mast-ink: #FFFFFF;
+  --strip-bg: #359FA0;
+  --strip-ink: #071414;
+  --display: "Bodoni Moda", "Bodoni 72", "Didot", Georgia, serif;
+  --label: "Bebas Neue", "Oswald", "Arial Narrow", Impact, sans-serif;
+  --body: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #0D1B1B;
+    --surface: #132727;
+    --ink: #F4EEDB;
+    --muted: #A7BBB8;
+    --rule: #25403F;
+    --link: #8AD6D1;
+    --soft: #1A3030;
+    --band-bg: #359FA0;
+    --band-ink: #071414;
+    --band-edge: #8AD6D1;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #0D1B1B;
+  --surface: #132727;
+  --ink: #F4EEDB;
+  --muted: #A7BBB8;
+  --rule: #25403F;
+  --link: #8AD6D1;
+  --soft: #1A3030;
+  --band-bg: #359FA0;
+  --band-ink: #071414;
+  --band-edge: #8AD6D1;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.6;
+}
+a { color: var(--link); text-underline-offset: 2px; }
+a:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; border-radius: 2px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+p { margin: 0; }
+img { max-width: 100%; height: auto; }
+.wrap { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+
+/* Bandeau : fond texturé, logo clair, formes de la maquette, mention légale */
+.mast { color: var(--mast-ink); }
+.banner {
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center;
+  padding: clamp(30px, 5vw, 70px) 20px 0;
+  background: var(--mast-bg) url(fond-paysage.jpg) center / 100% 100% no-repeat;
+}
+.banner h1 { line-height: 0; position: relative; }
+.banner h1 img { display: block; width: clamp(250px, 42vw, 620px); }
+.deco-tr { position: absolute; top: 0; right: 0; width: clamp(104px, 19vw, 262px); height: auto; }
+.banner-foot {
+  align-self: stretch; display: flex; align-items: flex-end; gap: 10px;
+  max-width: 1320px; padding: clamp(20px, 3.2vw, 46px) 4px 14px;
+}
+.deco-bl { flex: none; width: clamp(34px, 3.6vw, 50px); height: auto; }
+.banner-foot p {
+  font-family: var(--label); font-size: clamp(11.5px, 1.02vw, 14.5px); letter-spacing: .03em;
+  line-height: 1.15; max-width: 62em; text-wrap: pretty;
+}
+.strip { background: var(--strip-bg); color: var(--strip-ink); }
+.strip .wrap {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 4px 14px; flex-wrap: wrap;
+  padding-top: 7px; padding-bottom: 5px;
+  font-family: var(--label); font-size: 16px; letter-spacing: .06em; line-height: 1.2;
+}
+
+/* Navigation pays */
+.countries { background: var(--surface); border-bottom: 1px solid var(--rule); }
+.countries ul {
+  list-style: none; margin: 0 auto; padding: 10px 20px; max-width: 1140px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+}
+.countries a {
+  display: flex; align-items: center; gap: 8px; padding: 8px 10px 6px;
+  border: 1px solid var(--rule); border-radius: 3px;
+  color: var(--ink); text-decoration: none;
+  font-family: var(--label); font-size: 17px; letter-spacing: .05em; line-height: 1.15;
+}
+.countries a:hover { border-color: var(--teal); background: var(--soft); }
+.flag { width: 27px; height: 18px; flex: none; border-radius: 2px; box-shadow: 0 0 0 1px rgba(16,32,31,.22); }
+@media (min-width: 640px) { .countries ul { grid-template-columns: repeat(6, 1fr); } }
+
+main { padding: 26px 0 8px; display: flex; flex-direction: column; gap: 36px; }
+
+/* À la une */
+.une { background: var(--surface); border: 1px solid var(--rule); border-top: 5px solid var(--orange); padding: 16px 18px 6px; }
+.une h2 { font-family: var(--label); font-weight: 400; font-size: 2rem; letter-spacing: .03em; line-height: 1; }
+.une ol { list-style: none; margin: 12px 0 0; padding: 0; }
+.une li { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-top: 1px solid var(--rule); }
+.une li .flag { margin-top: 4px; }
+.une .where { display: block; font-family: var(--label); font-size: 15px; letter-spacing: .07em; line-height: 1.2; color: var(--link); }
+.une a { color: var(--ink); text-decoration: none; font-family: var(--display); font-weight: 600; font-size: 1.1rem; line-height: 1.3; display: block; }
+.une a:hover { text-decoration: underline; }
+
+/* Sections pays */
+.country { display: flex; flex-direction: column; gap: 18px; scroll-margin-top: 12px; }
+.country-head {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--band-bg); color: var(--band-ink);
+  border-bottom: 4px solid var(--band-edge); padding: 10px 14px 6px;
+}
+.country-head .flag { width: 42px; height: 28px; margin-bottom: 4px; }
+.country-head h2 { font-family: var(--label); font-weight: 400; font-size: 2.3rem; letter-spacing: .03em; line-height: 1; }
+.country-head .cap { margin-left: auto; font-family: var(--label); font-size: 15px; letter-spacing: .07em; line-height: 1.2; text-align: right; }
+.side { display: contents; }
+
+.story { display: flex; flex-direction: column; gap: 9px; padding-bottom: 18px; border-bottom: 1px solid var(--rule); }
+.rubric {
+  align-self: flex-start; background: var(--orange); color: var(--tag-ink);
+  font-family: var(--label); font-size: 15px; letter-spacing: .07em; line-height: 1.2; padding: 3px 9px 1px;
+}
+.story h3 { font-family: var(--display); font-weight: 700; font-size: 1.36rem; line-height: 1.2; }
+.story.lead h3 { font-size: 1.7rem; line-height: 1.13; }
+.story p.txt { max-width: 68ch; }
+.src { font-size: 14px; color: var(--muted); }
+.src a { color: var(--muted); }
+
+.briefs { background: var(--soft); border-left: 5px solid var(--orange); padding: 14px 16px; }
+.briefs h3 { font-family: var(--label); font-weight: 400; font-size: 19px; letter-spacing: .06em; line-height: 1.1; }
+.briefs ul { margin: 8px 0 0; padding-left: 18px; display: flex; flex-direction: column; gap: 8px; font-size: 15.5px; line-height: 1.5; }
+.briefs li::marker { color: var(--teal); }
+
+.note { border-top: 3px solid var(--ink); padding: 16px 0 34px; color: var(--muted); font-size: 14px; display: flex; flex-direction: column; gap: 8px; }
+.note p { max-width: 96ch; }
+.note strong { color: var(--ink); }
+
+/* Ordinateur */
+@media (min-width: 900px) {
+  .wrap { padding: 0 32px; }
+  .countries { position: sticky; top: 0; z-index: 5; }
+  .countries ul { padding: 10px 32px; gap: 12px; }
+  .countries a { justify-content: center; }
+
+  main { padding-top: 34px; gap: 52px; }
+
+  .une { padding: 20px 24px 8px; }
+  .une ol { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin-top: 16px; border-top: 1px solid var(--rule); }
+  .une li { flex-direction: column; gap: 10px; padding: 16px 18px 14px; border-top: 0; border-left: 1px solid var(--rule); }
+  .une li:first-child { border-left: 0; padding-left: 0; }
+  .une li:last-child { padding-right: 0; }
+  .une li .flag { margin-top: 0; }
+
+  .country {
+    display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); grid-template-rows: auto auto 1fr;
+    column-gap: 28px; row-gap: 22px; align-items: start; scroll-margin-top: 76px;
+  }
+  .country-head { grid-column: 1 / -1; padding: 12px 18px 8px; }
+  .country-head h2 { font-size: 2.7rem; }
+  .country > .story.lead { grid-column: 1; grid-row: 2; }
+  .country > .story.lead h3 { font-size: 2.2rem; line-height: 1.1; }
+  .country > .side {
+    grid-column: 2; grid-row: 2 / span 2;
+    display: flex; flex-direction: column; gap: 18px;
+    border-left: 1px solid var(--rule); padding-left: 28px;
+  }
+  .country > .side .story:last-child { border-bottom: 0; padding-bottom: 0; }
+  .country > .briefs { grid-column: 1; grid-row: 3; }
+  .country.solo > .briefs { grid-column: 2; grid-row: 2; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="f-sn" viewBox="0 0 30 20">
+      <rect width="10" height="20" fill="#00853F"/><rect x="10" width="10" height="20" fill="#FDEF42"/><rect x="20" width="10" height="20" fill="#E31B23"/>
+      <polygon fill="#00853F" points="15,6.8 15.72,9.01 18.04,9.01 16.16,10.38 16.88,12.59 15,11.22 13.12,12.59 13.84,10.38 11.96,9.01 14.28,9.01"/>
+    </symbol>
+    <symbol id="f-ml" viewBox="0 0 30 20">
+      <rect width="10" height="20" fill="#14B53A"/><rect x="10" width="10" height="20" fill="#FCD116"/><rect x="20" width="10" height="20" fill="#CE1126"/>
+    </symbol>
+    <symbol id="f-ne" viewBox="0 0 30 20">
+      <rect width="30" height="6.67" fill="#E05206"/><rect y="6.67" width="30" height="6.67" fill="#FFFFFF"/><rect y="13.33" width="30" height="6.67" fill="#0DB02B"/>
+      <circle cx="15" cy="10" r="2.5" fill="#E05206"/>
+    </symbol>
+    <symbol id="f-bf" viewBox="0 0 30 20">
+      <rect width="30" height="10" fill="#EF2B2D"/><rect y="10" width="30" height="10" fill="#009E49"/>
+      <polygon fill="#FCD116" points="15,6.8 15.72,9.01 18.04,9.01 16.16,10.38 16.88,12.59 15,11.22 13.12,12.59 13.84,10.38 11.96,9.01 14.28,9.01"/>
+    </symbol>
+    <symbol id="f-td" viewBox="0 0 30 20">
+      <rect width="10" height="20" fill="#002664"/><rect x="10" width="10" height="20" fill="#FECB00"/><rect x="20" width="10" height="20" fill="#C60C30"/>
+    </symbol>
+    <symbol id="f-aes" viewBox="0 0 30 20">
+      <rect width="30" height="20" fill="#359FA0"/>
+      <circle cx="8" cy="10" r="3" fill="#8AD6D1"/><circle cx="15" cy="10" r="3" fill="#FFF0C5"/><circle cx="22" cy="10" r="3" fill="#FF8C52"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="mast">
+  <div class="banner">
+    <svg class="deco-tr" viewBox="0 0 260 120" aria-hidden="true" focusable="false">
+      <circle cx="177" cy="59" r="39" fill="#FFF0C5"/>
+      <path d="M64 -3 L87 20 C97 38 126 47 150 24 C161 15 186 44 212 64 C226 73 240 62 262 60" fill="none" stroke="#8AD6D1" stroke-width="7" stroke-linecap="round"/>
+    </svg>
+    <h1><img src="logo-clair.png" alt="Les Chroniques du Sahel" width="1500" height="536"></h1>
+    <div class="banner-foot">
+      <svg class="deco-bl" viewBox="0 0 40 36" aria-hidden="true" focusable="false">
+        <rect x="0" y="9" width="29" height="27" rx="9" fill="#FF8C52"/>
+        <circle cx="27" cy="12" r="12" fill="#FFF0C5"/>
+      </svg>
+      <p>© 2026 OneHope Sahel. Cette publication est la propriété de OneHope Sahel. Tous droits réservés. Toute reproduction ou diffusion, totale ou partielle, sans autorisation écrite préalable est interdite. Les articles cités restent la propriété de leurs éditeurs respectifs.</p>
+    </div>
+  </div>
+  <div class="strip">
+    <div class="wrap">
+      <span>Samedi 14 novembre 2026</span>
+      <span>N° 0 · édition pilote</span>
+    </div>
+  </div>
+</header>
+
+<nav class="countries" aria-label="Pays">
+  <ul>
+    <li><a href="#senegal"><svg class="flag" aria-hidden="true"><use href="#f-sn"/></svg>Sénégal</a></li>
+    <li><a href="#mali"><svg class="flag" aria-hidden="true"><use href="#f-ml"/></svg>Mali</a></li>
+    <li><a href="#niger"><svg class="flag" aria-hidden="true"><use href="#f-ne"/></svg>Niger</a></li>
+    <li><a href="#burkina-faso"><svg class="flag" aria-hidden="true"><use href="#f-bf"/></svg>Burkina</a></li>
+    <li><a href="#tchad"><svg class="flag" aria-hidden="true"><use href="#f-td"/></svg>Tchad</a></li>
+    <li><a href="#aes"><svg class="flag" aria-hidden="true"><use href="#f-aes"/></svg>AES</a></li>
+  </ul>
+</nav>
+
+<main class="wrap">
+
+  <section class="une" aria-labelledby="une-t">
+    <h2 id="une-t">À la une</h2>
+    <ol>
+      <li><svg class="flag" aria-hidden="true"><use href="#f-sn"/></svg><div><span class="where">Sénégal</span><a href="#senegal">Les JOJ de Dakar se referment, le budget reste en suspens à l'Assemblée</a></div></li>
+      <li><svg class="flag" aria-hidden="true"><use href="#f-ml"/></svg><div><span class="where">Mali</span><a href="#mali">Frappes de l'armée et attaques attribuées au Jnim dans le centre du pays</a></div></li>
+      <li><svg class="flag" aria-hidden="true"><use href="#f-ne"/></svg><div><span class="where">Niger</span><a href="#niger">Niamey interdit l'exportation de l'arachide pour la transformer sur place</a></div></li>
+      <li><svg class="flag" aria-hidden="true"><use href="#f-bf"/></svg><div><span class="where">Burkina Faso</span><a href="#burkina-faso">Le parquet annonce six procédures visant 45 personnes et entités</a></div></li>
+      <li><svg class="flag" aria-hidden="true"><use href="#f-td"/></svg><div><span class="where">Tchad</span><a href="#tchad">Le président à Ati, sixième étape de sa tournée sécuritaire</a></div></li>
+    </ol>
+  </section>
+
+  <!-- SÉNÉGAL -->
+  <section class="country" id="senegal" aria-labelledby="sn-t">
+    <div class="country-head">
+      <svg class="flag" aria-hidden="true"><use href="#f-sn"/></svg>
+      <h2 id="sn-t">Sénégal</h2>
+      <span class="cap">Dakar</span>
+    </div>
+
+    <article class="story lead">
+      <p class="rubric">Société · Sport</p>
+      <h3>Clôture des JOJ Dakar 2026, premiers Jeux olympiques accueillis en Afrique</h3>
+      <p class="txt">Les Jeux olympiques de la jeunesse ont pris fin vendredi 13 novembre, après deux semaines de compétitions à Dakar, Diamniadio et Saly. Le programme comptait 151 épreuves, et 95 des 206 comités olympiques présents repartent avec au moins une médaille. La presse sénégalaise crédite le pays hôte de douze médailles, dont cinq en or (treize selon <em>Record</em>), et pose déjà la question de l'entretien des infrastructures.</p>
+      <p class="src">Sources : <a href="https://fr.allafrica.com/stories/202611140086.html">allAfrica, d'après Anadolu</a> · <a href="https://www.seneplus.com/article/revue-de-la-presse-seneplus-du-samedi-14-novembre-2026">SenePlus, revue de presse</a></p>
+    </article>
+
+    <div class="side">
+      <article class="story">
+        <p class="rubric">Économie · Politique</p>
+        <h3>Budget : le FMI rappelle ses conditions, des crédits rejetés en commission</h3>
+        <p class="txt">Le FMI a redit jeudi que son programme d'environ 2,2 milliards de dollars dépend d'un cadre budgétaire finalisé, de corrections sur les déclarations de dette et de garanties de financement. L'institution précise qu'elle ne prend pas part aux échanges entre le gouvernement et l'Assemblée. Selon <em>Le Quotidien</em>, les budgets de plusieurs ministères, dont les Affaires étrangères, l'Intérieur et la Justice, ont été rejetés en commission : dix-neuf ministères sont concernés depuis le début de l'examen. Dakaractu fait par ailleurs état d'un déficit de 585,5&nbsp;milliards de FCFA à fin septembre.</p>
+        <p class="src">Sources : <a href="https://xalimasn.com/2026/11/14/crise-budgetaire-au-senegal-le-fmi-refuse-de-simmiscer-dans-le-debat-parlementaire-mais-maintient-ses-exigences/">Xalima</a> · <a href="https://www.seneplus.com/article/revue-de-la-presse-seneplus-du-samedi-14-novembre-2026">SenePlus, revue de presse</a> · <a href="https://www.dakaractu.com/">Dakaractu</a></p>
+      </article>
+
+      <article class="story">
+        <p class="rubric">Société</p>
+        <h3>Migration : une pirogue d'environ 200 personnes interceptée, naufrage au large de Lompoul</h3>
+        <p class="txt"><em>Libération</em> rapporte que la Marine nationale a intercepté une pirogue transportant environ 200 candidats au départ, parmi lesquels des mineurs dont un enfant de six ans. Le même journal avance un bilan provisoire de quatre morts dans un naufrage au large de Lompoul. Le président Bassirou Diomaye Faye a promis de donner à la jeunesse des raisons d'espérer.</p>
+        <p class="src">Sources : <a href="https://www.seneplus.com/article/revue-de-la-presse-seneplus-du-samedi-14-novembre-2026">SenePlus, revue de presse</a> · <a href="https://senego.com/decouvrez-les-unes-des-journaux-senegalais-du-samedi-14-novembre-2026_2023791.html">Senego</a></p>
+      </article>
+    </div>
+
+    <div class="briefs">
+      <h3>En bref</h3>
+      <ul>
+        <li><strong>Santé.</strong> Cancer de la prostate : huit patients sur dix consultent trop tard, pour plus de 1&nbsp;000 nouveaux cas par an, selon <em>L'AS</em>. <a href="https://www.seneplus.com/article/revue-de-la-presse-seneplus-du-samedi-14-novembre-2026">SenePlus</a></li>
+        <li><strong>Politique.</strong> Mamoudou Ibra Kane plaide pour un gouvernement d'union nationale réunissant pouvoir, opposition et société civile. <a href="https://senego.com/decouvrez-les-unes-des-journaux-senegalais-du-samedi-14-novembre-2026_2023791.html">Senego</a></li>
+        <li><strong>Diplomatie.</strong> L'Espagne félicite le Sénégal pour la baisse des arrivées aux Canaries, relaie <em>Walf Quotidien</em>. <a href="https://www.seneplus.com/article/revue-de-la-presse-seneplus-du-samedi-14-novembre-2026">SenePlus</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- MALI -->
+  <section class="country" id="mali" aria-labelledby="ml-t">
+    <div class="country-head">
+      <svg class="flag" aria-hidden="true"><use href="#f-ml"/></svg>
+      <h2 id="ml-t">Mali</h2>
+      <span class="cap">Bamako</span>
+    </div>
+
+    <article class="story lead">
+      <p class="rubric">Sécurité</p>
+      <h3>Frappes aériennes de l'armée, attaques attribuées au Jnim dans le centre</h3>
+      <p class="txt">L'armée malienne a revendiqué vendredi des frappes aériennes à Kadiana, dans la région de Bougouni, et à Boulkessi, dans celle de Douentza. La veille, le Jnim avait revendiqué des tirs d'obus sur le camp de Léré et deux attaques contre des positions militaires près de Mopti. D'après RFI, des civils ont aussi été touchés depuis début novembre dans les régions de Ségou et de Mopti, sans revendication : à Nampala, une frappe de drone sur le marché a fait un mort et une dizaine de blessés, et quatre villages protégés par des chasseurs dozos se sont vidés de leurs habitants.</p>
+      <p class="src">Sources : <a href="https://www.pressafrik.com/Mali-attaques-du-Jnim-contre-des-civils-dans-les-regions-de-Segou-et-Mopti_a314586.html">RFI, repris par PressAfrik</a> · <a href="https://fr.qz.com/jnim-vise-civils-regions-segou-mopti-mali-111426">Quartz</a></p>
+    </article>
+
+    <div class="side">
+      <article class="story">
+        <p class="rubric">Politique</p>
+        <h3>Conseil des ministres : un ordre unique pour les géomètres-topographes et une série de nominations</h3>
+        <p class="txt">Réuni vendredi à Koulouba sous la présidence du général Assimi Goïta, le Conseil a adopté des textes qui regroupent la profession de géomètre-topographe dans un cadre juridique et un ordre national uniques. Une parcelle de près de cinq hectares à Badougou-Nafadji, dans le cercle de Kati, est affectée à un lycée d'excellence. Parmi les nominations : Mouhamed B. Diarra à la tête de l'INPS et Antoine Zerbo à la Caisse des dépôts et consignations.</p>
+        <p class="src">Source : <a href="https://mali24.info/communique-du-conseil-des-ministres-du-vendredi-13-novembre-2026/">Mali 24, communiqué du Conseil</a></p>
+      </article>
+
+      <article class="story">
+        <p class="rubric">Économie</p>
+        <h3>Coton, riz, engrais : les objectifs agricoles fixés pour 2026-2030</h3>
+        <p class="txt">Le ministre de l'Agriculture a rendu compte de la réunion tenue le 23 octobre à Ouagadougou sur les programmes régionaux 2026-2030. Trois cibles ressortent : transformer au moins la moitié de la fibre de coton produite, porter l'autosuffisance en riz de 58&nbsp;% à 90&nbsp;% et faire passer la consommation d'engrais de 13 à 50&nbsp;kg par hectare.</p>
+        <p class="src">Source : <a href="https://mali24.info/communique-du-conseil-des-ministres-du-vendredi-13-novembre-2026/">Mali 24, communiqué du Conseil</a></p>
+      </article>
+    </div>
+
+    <div class="briefs">
+      <h3>En bref</h3>
+      <ul>
+        <li><strong>Solidarité.</strong> La BNDA verse 50&nbsp;millions de FCFA à la cagnotte de soutien aux orpailleurs expulsés de Guinée, selon <em>Aujourd'hui-Mali</em>. <a href="https://www.maliweb.net/">Maliweb</a></li>
+        <li><strong>Climat.</strong> Le Premier ministre, le général Abdoulaye Maïga, a pris la parole à la COP31 à Antalya, en Turquie. <a href="https://www.maliweb.net/">Maliweb</a></li>
+        <li><strong>Santé.</strong> Les cas confirmés de dengue reculent par rapport à la semaine précédente, indique le Conseil des ministres. <a href="https://mali24.info/communique-du-conseil-des-ministres-du-vendredi-13-novembre-2026/">Mali 24</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- NIGER -->
+  <section class="country solo" id="niger" aria-labelledby="ne-t">
+    <div class="country-head">
+      <svg class="flag" aria-hidden="true"><use href="#f-ne"/></svg>
+      <h2 id="ne-t">Niger</h2>
+      <span class="cap">Niamey</span>
+    </div>
+
+    <article class="story lead">
+      <p class="rubric">Économie</p>
+      <h3>L'exportation de l'arachide interdite sur tout le territoire</h3>
+      <p class="txt">Le ministre du Commerce et de l'Industrie, Abdoulaye Seydou, a présenté vendredi l'arrêté n°&nbsp;05-18 du 11 novembre, qui interdit d'exporter l'arachide. Niamey veut réserver la récolte aux unités locales, notamment les huileries. Des autorisations exceptionnelles restent possibles vers les pays de l'AES, et toute cargaison interceptée sera saisie au profit de l'État. La mesure s'ajoute aux interdictions déjà en vigueur sur le mil, le riz et le sorgho.</p>
+      <p class="src">Sources : <a href="https://anp.ne/niger-le-gouvernement-interdit-lexportation-de-larachide-sur-tout-le-territoire-national/">Agence nigérienne de presse</a> · <a href="https://www.lesahel.org/point-de-presse-du-ministre-du-commerce-et-de-lindustrie-lexportation-de-larachide-desormais-interdite-au-niger/">Le Sahel</a></p>
+    </article>
+
+    <div class="briefs">
+      <h3>En bref</h3>
+      <ul>
+        <li><strong>Achats publics.</strong> Le ministre a rappelé le décret qui oblige les administrations à acheter en priorité les produits fabriqués au Niger. <a href="https://www.lesahel.org/point-de-presse-du-ministre-du-commerce-et-de-lindustrie-lexportation-de-larachide-desormais-interdite-au-niger/">Le Sahel</a></li>
+        <li><strong>Mines.</strong> Les travaux de production industrielle de sel sont lancés à Tidikelt, dans la région d'Agadez. <a href="https://www.actuniger.com/">ActuNiger</a></li>
+        <li><strong>Médias.</strong> Une vingtaine de journalistes et de cadres nigériens suivent une formation à Pékin dans le cadre de la coopération avec la Chine. <a href="https://www.actuniger.com/">ActuNiger</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- BURKINA FASO -->
+  <section class="country" id="burkina-faso" aria-labelledby="bf-t">
+    <div class="country-head">
+      <svg class="flag" aria-hidden="true"><use href="#f-bf"/></svg>
+      <h2 id="bf-t">Burkina Faso</h2>
+      <span class="cap">Ouagadougou</span>
+    </div>
+
+    <article class="story lead">
+      <p class="rubric">Justice · Politique</p>
+      <h3>Six procédures judiciaires visent 45 personnes et entités</h3>
+      <p class="txt">Le procureur général près la Cour d'appel de Ouagadougou, Pingdwendé Désiré Sawadogo, a fait le point vendredi sur six dossiers ouverts pour des soupçons de terrorisme et d'atteintes à l'ordre public. L'ancien président de la transition Paul-Henri Sandaogo Damiba, François Compaoré et l'activiste ivoirien Camille Makosso figurent parmi les personnes mises en cause. Les enquêtes portent notamment sur le financement et l'apologie du terrorisme, mais aussi sur des faits de diffamation et de démoralisation des forces armées.</p>
+      <p class="src">Sources : <a href="https://fr.allafrica.com/stories/202611140086.html">allAfrica, d'après LSI Africa</a> · <a href="https://burkina24.com/2026/11/13/burkina-faso-le-parquet-fait-le-point-sur-les-poursuites-pour-faits-de-terrorisme/">Burkina 24</a></p>
+    </article>
+
+    <div class="side">
+      <article class="story">
+        <p class="rubric">Société</p>
+        <h3>Pazani : plus de 78 millions de FCFA pour des salles de classe et un château d'eau</h3>
+        <p class="txt">L'ambassade du Japon finance, avec l'association SINI-LABE « Sécuriser le Futur », la construction de salles de classe et d'un château d'eau à Pazani, pour un montant supérieur à 78&nbsp;millions de FCFA.</p>
+        <p class="src">Source : <a href="https://burkina24.com/2026/11/13/cooperation-burkina-japon-plus-de-78-millions-de-fcfa-pour-la-construction-de-salles-de-classe-et-dun-chateau-deau-a-pazani/">Burkina 24</a></p>
+      </article>
+    </div>
+
+    <div class="briefs">
+      <h3>En bref</h3>
+      <ul>
+        <li><strong>Infrastructures.</strong> Ollo Palenfo a inspecté deux chantiers de pistes rurales et demande une livraison au 15 décembre. <a href="https://lefaso.net/spip.php?article150783=">Lefaso.net</a></li>
+        <li><strong>Finance.</strong> Coris Bank International ouvre un point dédié aux services financiers numériques et aux transferts d'argent dans son ancien siège de Ouagadougou. <a href="https://burkina24.com/2026/11/13/ouagadougou-lancien-siege-de-coris-bank-international-sa-accueille-un-cash-point-dedie-aux-services-financiers-digitaux-et-aux-transferts-dargent/">Burkina 24</a></li>
+        <li><strong>Culture.</strong> La 4<sup>e</sup> Semaine du cinéma sino-burkinabè se tient à Ouagadougou jusqu'au 15 novembre. <a href="https://burkina24.com/">Burkina 24</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- TCHAD -->
+  <section class="country" id="tchad" aria-labelledby="td-t">
+    <div class="country-head">
+      <svg class="flag" aria-hidden="true"><use href="#f-td"/></svg>
+      <h2 id="td-t">Tchad</h2>
+      <span class="cap">N'Djamena</span>
+    </div>
+
+    <article class="story lead">
+      <p class="rubric">Politique</p>
+      <h3>Le président à Ati, sixième étape de sa tournée sécuritaire</h3>
+      <p class="txt">Mahamat Idriss Déby Itno est arrivé ce samedi dans le chef-lieu du Batha, où l'a accueilli le délégué général du gouvernement, Ahmat Issakha Diar. Des rencontres sont prévues avec les autorités administratives, traditionnelles et militaires. Au menu : le respect de l'autorité de l'État, le règlement des conflits entre communautés et la cohabitation pacifique.</p>
+      <p class="src">Source : <a href="https://www.alwihdainfo.com/le-marechal-du-tchad-poursuit-sa-tournee-securitaire-dans-le-batha/">Alwihda Info</a></p>
+    </article>
+
+    <div class="side">
+      <article class="story">
+        <p class="rubric">Société · Humanitaire</p>
+        <h3>Sécheresse : la crainte de poches de famine dans l'Est</h3>
+        <p class="txt">Un reportage de France 24 dans l'est du pays décrit un déficit de pluies qui pourrait être le plus grave depuis plus de quarante ans, avec des alertes d'ONG et d'organismes nationaux. FEWS NET maintient jusqu'en janvier 2027 un niveau de crise alimentaire dans le Ouaddaï, le Sila, le Wadi Fira et l'Ennedi Est. La même zone reçoit de nouveaux réfugiés venus du Soudan.</p>
+        <p class="src">Sources : <a href="https://www.titrespresse.com/29092512603/tchad-ong-secheresse">France 24, via Titrespresse</a> · <a href="https://fews.net/west-africa/chad">FEWS NET</a> · <a href="https://www.alwihdainfo.com/">Alwihda Info</a></p>
+      </article>
+
+      <article class="story">
+        <p class="rubric">Économie</p>
+        <h3>Budget 2027 : trois ministres auditionnés à l'Assemblée</h3>
+        <p class="txt">Les ministres de l'Élevage, des Infrastructures et de l'Aménagement du territoire ont défendu vendredi leurs priorités devant la commission du Développement rural, au Palais de la Démocratie. Les députés les ont interrogés sur les mesures d'accompagnement prévues pour le monde rural.</p>
+        <p class="src">Source : <a href="https://www.alwihdainfo.com/budget-2027-au-tchad-trois-ministres-auditionnes-a-lassemblee/">Alwihda Info</a></p>
+      </article>
+    </div>
+
+    <div class="briefs">
+      <h3>En bref</h3>
+      <ul>
+        <li><strong>Cadre de vie.</strong> L'opération « N'Djamena Ville Propre » démarre dans le 9<sup>e</sup> arrondissement, avec un volet de prévention de la dengue. <a href="https://tchadinfos.com/2026/11/14/lancement-de-loperation-ndjamena-ville-propre-dans-le-9e-arrondissement/">Tchadinfos</a></li>
+        <li><strong>Éducation.</strong> Le lycée-collège Saint-Étienne fait composer ses élèves en plein air pour limiter la tricherie. <a href="https://www.alwihdainfo.com/ndjamena-des-compositions-a-ciel-ouvert-au-lycee-college-saint-etienne-pour-contrer-la-tricherie/">Alwihda Info</a></li>
+        <li><strong>Société civile.</strong> Quatre ans après le dialogue national, la coalition Wakit Tamma demande l'ouverture d'un nouveau dialogue politique. <a href="https://www.lepaystchad.com/">Le Pays</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- AES -->
+  <section class="country" id="aes" aria-labelledby="aes-t">
+    <div class="country-head">
+      <svg class="flag" aria-hidden="true"><use href="#f-aes"/></svg>
+      <h2 id="aes-t">Espace AES</h2>
+      <span class="cap">Mali · Niger · Burkina</span>
+    </div>
+
+    <article class="story lead">
+      <p class="rubric">Diplomatie</p>
+      <h3>Les ministres de l'AES regrettent les expulsions depuis la Guinée et critiquent l'Union européenne</h3>
+      <p class="txt">Réunis en session extraordinaire à Ouagadougou les 11 et 12 novembre, les ministres des trois pays disent comprendre qu'un État fasse respecter sa loi, mais déplorent des renvois massifs décidés sans concertation. Conakry a interdit l'orpaillage clandestin par un décret du 2 novembre, ce qui a provoqué de nombreux départs vers le Mali. Le communiqué final dénonce aussi ce que les ministres qualifient d'ingérences de l'Union européenne.</p>
+      <p class="src">Sources : <a href="https://www.guinee360.com/13/11/2026/depart-massif-des-orpailleurs-vers-le-mali-laes-sort-du-silence-et-deplore-la-decision-de-conakry">Guinée360</a> · <a href="https://mali24.info/confederation-aes-les-ministres-deplorent-les-expulsions-en-guinee-et-denoncent-les-ingerences-de-lue/">Mali 24</a> · <a href="https://www.africaguinee.com/orpaillage-illegal-en-guinee-laes-deplore-des-expulsions-massives-et-non-concertees-de-ses-ressortissants/">Africaguinée, d'après l'AIB</a></p>
+    </article>
+
+    <div class="side">
+      <article class="story">
+        <p class="rubric">Travail</p>
+        <h3>Vers des règles communes pour la mobilité des travailleurs</h3>
+        <p class="txt">Les ministres chargés du travail et de la fonction publique se sont retrouvés vendredi à Ouagadougou autour de quatre projets de textes. Ils portent sur les bonnes pratiques dans la fonction publique, l'embauche des travailleurs migrants, un guide qui leur est destiné et une convention permettant de conserver ses prestations sociales d'un pays à l'autre.</p>
+        <p class="src">Source : <a href="https://burkina24.com/2026/11/13/aes-les-trois-pays-veulent-harmoniser-les-regles-de-mobilite-professionnelle-et-garantir-les-droits-sociaux-des-travailleurs/">Burkina 24</a></p>
+      </article>
+    </div>
+
+  </section>
+
+  <footer class="note">
+    <p><strong>Comment ce numéro est fait.</strong> Sélection et résumés établis le 14 novembre 2026 vers 16&nbsp;h (GMT) à partir de médias nationaux et internationaux. Chaque résumé renvoie à l'article d'origine, à lire pour le détail.</p>
+    <p>Les informations de sécurité reposent parfois sur une seule source et n'ont pas été recoupées. Édition pilote à relire avant diffusion.</p>
+  </footer>
+
+</main>
+</body>
+</html>
